@@ -1,13 +1,18 @@
 <script setup>
 import { useRouter } from 'vue-router';
 
-const router = useRouter()
+const router = useRouter();
 
 function onclick1(){
-    // window.alert("这是一个弹窗提示！");  
-    // router.push('/')                   // vue3 第二种跳转方式 通过路由字段
-    // router.push({name: 'home'})            // vue3 第二种跳转方式 通过命令字段
-    router.push({name: 'helloworld', params: "你好"})            // vue3 第二种跳转方式 通过命令字段
+    var para = 'hello world';
+    window.alert("这是一个弹窗提示!"+ para);  
+    // router.push('/');                   // vue3 第二种跳转方式 通过路由字段
+    // router.push({name: 'home'});            // vue3 第二种跳转方式 通过name字段
+    // router.push(`/helloworld`);                   // vue3 第二种跳转方式 通过路由字段
+    // router.push(`/helloworld?msg=${para}`);                   // vue3 第二种跳转方式 通过路由字段
+    // router.push({name: 'helloworld',params: {msg: para}});            // vue3 带参跳转 通过命令字段
+    router.push({name: 'helloworld', query: {msg: para}});            // vue3 带参跳转 通过命令字段
+    // 带查询参数，变成 /helloworld?msg=hello world
 }
 </script>
 
@@ -35,9 +40,6 @@ function onclick1(){
 <style>
 .dowebok {
     position:relative;
-    /* top: 25%; */
-    /* top: 200px; */
-    /* left: 40%; */
     height: 400px;
     width: 300px;
     background-color:aliceblue;

@@ -18,8 +18,7 @@ const routes = [
   {
     path: '/helloworld',
     name: 'helloworld',
-    component: HelloWorld
-    // props: true  // 启用props传参
+    component: HelloWorld,
   }
   // 其他路由配置...
 ]
