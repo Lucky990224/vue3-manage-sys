@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
+import Login from '../views/auth-views/Login.vue
 import HelloWorld from '../components/HelloWorld.vue'
 
 // 定义一个路由数组，统一管理路由
