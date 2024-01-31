@@ -7,12 +7,19 @@ const routes = [
   {
     path: '/',        // 路由地址：首页
     name: 'Home',     // 命名路由
-    component: Home   // 对应的组件
+    component: Home,   // 对应的组件
+    meta: {
+      title: '首页',  // 设置浏览器标题
+    },
   },
   {
     path: '/auth',
     name: 'Auth',
     component: () => import('@/views/auth-views/router-layout.vue'),
+    meta: {
+      title: '认证',  
+      // lable: '认证',  
+    },
     redirect: "/auth/login",
     children: auth_routes
   }
@@ -24,8 +31,18 @@ const router = createRouter({
   routes // 定义路由数组，相当于 routes: routes 的简写模式
 })
 
+
+function getTitle(route) {
+  let title = '';
+  if (route.meta && route.meta.title) {
+    title = route.meta.title;
+  }
+  return title;
+}
+
 router.beforeEach((to, from, next) => {// 在路由跳转前执行的逻辑
-  next()
+  document.title = getTitle(to);; // 设置浏览器标题
+  next();
 })
   
 router.afterEach((to, from) => {
