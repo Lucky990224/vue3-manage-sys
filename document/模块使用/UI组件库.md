@@ -21,6 +21,34 @@ const app = createApp(...)
 app.use(ElementPlus)
 app.mount('#app')
 ```
+vue文件中使用
+```
+<template>
+  <div>
+    <el-button :type="type">{{ text }}</el-button>
+  </div>
+</template>
+
+<script setup>
+import { ElButton } from 'element-plus';
+import { defineProps } from 'vue';
+
+// 定义props
+const props = defineProps({
+  type: {
+    type: String,
+    default: 'primary'
+  },
+  text: {
+    type: String,
+    default: 'Button'
+  }
+});
+</script>
+
+
+```
+
 
 
 ## Ant Design Vue

@@ -1,21 +1,21 @@
 <template>
-    <div class="auth-main-area">
-        <div class="top-area">
-            <div class="top-image-div">
-            </div>
-        </div>
-        <div class="sys-info-area">
-            <div style="height: 64%;font-size: 60px; font-weight: 550;">
-                {{ 111 }}
-            </div>
-            <div style="height: 36%;text-align: right;">
-                {{ 111 }}
-            </div>
-        </div>
-        <div class="router-login-area">
-            <RouterView></RouterView>
-        </div>
+  <div class="auth-main-area">
+    <div class="top-area">
+      <div class="top-image-div">
+      </div>
     </div>
+    <div class="sys-info-area">
+      <div style="height: 64%;font-size: 60px; font-weight: 550;">
+        {{ 111 }}
+      </div>
+      <div style="height: 36%;text-align: right;">
+        {{ 111 }}
+      </div>
+    </div>
+    <div class="router-login-area">
+      <RouterView></RouterView>
+    </div>
+  </div>
 </template>
 <style scoped>
 * {
