@@ -6,6 +6,25 @@
   `npm install vue-router -S`  
   -S 是--save的简写。它表示将安装的包信息保存到package.json文件的dependencies字段中
 
+
+## 路由参数解析
+
+* path：定义路由的路径，可以是字符串或正则表达式。
+* name：给路由命名，方便在代码中引用。
+* component：指定路由对应的组件。
+* meta：定义路由的元数据，可以包含任意自定义的属性，如roles、icon、label等。  
+  * title：定义页面的标题，可以在路由跳转时动态修改页面标题。
+  * icon：指定路由在菜单中显示的图标，可以使用图标库的图标名称或者图标的URL。
+  * roles：指定路由所需的角色权限，只有具备指定角色的用户才能访问该路由。
+  * auth：指定路由是否需要进行身份验证，可以用来控制需要登录才能访问的路由。
+  * breadcrumb：指定路由在面包屑导航中的显示文本，用于生成面包屑导航条。
+  * keepAlive：指定路由组件是否需要被缓存，以提高页面切换的性能。
+  * hidden：指定路由是否在菜单中隐藏，可以用于隐藏不需要在菜单中显示的路由。
+  * 其他自定义参数：你可以根据具体的需求定义其他自定义的参数，用于传递额外的信息给路由或路由组件
+* redirect：配置重定向，当访问该路由时，自动重定向到指定的路径。
+* children：定义子路由，可以嵌套在父路由中，形成路由嵌套的层级结构
+
+
 ## 创建首页和登录页面
 在src中创建views文件夹和Home.vue 以及 Login.vue组件
 * Home.vue  
@@ -175,3 +194,45 @@ const count = ref(0);
 </template>
 
 ```
+
+## 路由嵌套  
+
+* router/index.js
+``` 
+const routes = [
+  {
+    path: '/',        // 路由地址：首页
+    name: 'Home',     // 命名路由
+    component: Home   // 对应的组件
+  },
+  {
+    path: '/auth',
+    name: 'Auth',
+    component: () => import('@/views/auth-views/router-layout.vue'),
+    redirect: "/auth/login",
+    children: auth_routes   // 嵌套的路由
+  }
+]
+```
+* views/auth-views/rouer.js
+```
+// 定义一个路由数组，统一管理路由
+const auth_routes = [
+  {
+    path: 'login',
+    name: 'Login',
+    component: () => import('@/views/auth-views/Login.vue'),
+  },
+  {
+    path: 'sign-up',
+    name: 'Sign-up',
+    component: () => import('@/components/HelloWorld.vue'),
+  }
+]
+
+export default auth_routes
+```
+* 访问嵌套路由Login时，会先显示 Auth 的组件，然后Auth组件上显示嵌套路由Login组件
+
+
+

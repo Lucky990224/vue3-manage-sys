@@ -12,6 +12,11 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],  // 配置所需要的插件列表
   base: './',
+  resolve: {      
+    alias: {
+      '@': '/src'     // 使用@表示根路径
+    }
+  },
   server: {
     host: '0.0.0.0', 
     port: 8888,
@@ -43,3 +48,9 @@ export default defineConfig({
 * open: bool或字符串，自动打开默认浏览器
 
 ### 5、bulid【构建选项，如`outDir`、`assetsDir`等】
+
+### 6、resolve【配置模块解析的规则】
+* alias：配置别名，可以通过别名来引用模块。例如，{ '@': '/src' } 可以将 @ 作为 /src 的别名。
+* extensions：配置模块的扩展名，当引用模块时可以省略扩展名。例如，['.js', '.jsx', '.json'] 可以配置支持这些扩展名的模块。
+* mainFields：配置模块的入口字段，当引用模块时可以省略入口字段。例如，['module', 'jsnext', 'main'] 可以配置按照这个顺序查找模块的入口字段。
+* modules：配置自定义模块解析规则。例如，[{ name: 'module-name', resolve: '/path/to/module' }] 可以将 module-name 解析为 /path/to/module。

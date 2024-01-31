@@ -5,6 +5,11 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],  // 配置所需要的插件列表
   base: './',
+  resolve: {
+    alias: {
+      '@': '/src'
+    }
+  },
   server: {
     host: '0.0.0.0',
     port: 8888,

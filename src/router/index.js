@@ -1,26 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import Login from '../views/auth-views/Login.vue
-import HelloWorld from '../components/HelloWorld.vue'
+import Home from '@/views/Home.vue'
+import auth_routes from '@/views/auth-views/router'
 
 // 定义一个路由数组，统一管理路由
 const routes = [
   {
     path: '/',        // 路由地址：首页
-    name: 'home',     // 命名路由
+    name: 'Home',     // 命名路由
     component: Home   // 对应的组件
   },
   {
-    path: '/login',
-    name: 'login',
-    component: Login
-  },
-  {
-    path: '/helloworld',
-    name: 'helloworld',
-    component: HelloWorld,
+    path: '/auth',
+    name: 'Auth',
+    component: () => import('@/views/auth-views/router-layout.vue'),
+    redirect: "/auth/login",
+    children: auth_routes
   }
-  // 其他路由配置...
 ]
 
 // 使用 createRouter 方法创建路由实例

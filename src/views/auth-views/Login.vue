@@ -11,7 +11,8 @@ function onclick1(){
     // router.push(`/helloworld`);                   // vue3 第二种跳转方式 通过路由字段
     // router.push(`/helloworld?msg=${para}`);                   // vue3 第二种跳转方式 通过路由字段
     // router.push({name: 'helloworld',params: {msg: para}});            // vue3 带参跳转 通过命令字段
-    router.push({name: 'helloworld', query: {msg: para}});            // vue3 带参跳转 通过命令字段
+    router.push({name: 'Sign-up', query: {msg: para}});            // vue3 带参跳转 通过命令字段
+    // router.push({path: '/auth/sign-up', query: {msg: para}});            // vue3 带参跳转 通过命令字段
     // 带查询参数，变成 /helloworld?msg=hello world
 }
 </script>

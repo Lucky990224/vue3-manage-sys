@@ -30,5 +30,5 @@ const count = ref(0);
     <!-- 【内置方法】重置 store 的状态 -->
   </div>
 
-  <router-link to="login">跳转登录页</router-link>
+  <router-link to="/auth/login">跳转登录页</router-link>
 </template>
