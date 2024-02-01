@@ -54,7 +54,7 @@ function checkedIds(){
 <template>
   <div id="auth-box">
     <div class="box-up">
-      <h3 class="logo-name-h3">登录</h3>
+      <h3 class="logo-name-h3">Login</h3>
     </div>
     <div class="box-done">
       <div>
@@ -65,7 +65,7 @@ function checkedIds(){
         <el-input v-model=act placeholder="账号/邮箱" />
       </div>
       <div>
-        <el-input v-model=pwd placeholder="登录密码"/>
+        <el-input v-model=pwd type="password" prefix-icon="el-icon-lock" placeholder="输入登录密码" show-password/>
       </div>
       <div>
         <label v-show=isCheckbox><input type="checkbox"  v-model='checkedIds'>记住账号</label>
@@ -86,9 +86,12 @@ function checkedIds(){
 <style>
 #auth-box {
   display:Flexbox;   /* 设置布局 */
+  /* justify-content: center; */
   position: absolute;	
-  top: 30%;
-  left: 40%;
+  top: 25%;
+  right: 10%;
+  width: 400px; 
+  height: 500px; 
   z-index: 1;
 }
 
@@ -104,5 +107,14 @@ function checkedIds(){
   z-index: -1;
 }
 
+.box-up {
+  height: 10%;
+  width: 100%;
+}
+
+.logo-name-h3 {
+  left: 5%;
+  height: 100%;
+}
 
 </style>
