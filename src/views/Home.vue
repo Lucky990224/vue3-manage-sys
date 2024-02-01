@@ -1,39 +1,40 @@
 <script setup>
-import { ElButton } from 'element-plus';// 定义props
+// import { WindowStore } from '@/store/window'
+// import { WindowStore } from '../store/window'
 
-const props = defineProps({
-  type: {
-    type: String,
-    default: 'primary'
-  },
-  text: {
-    type: String,
-    default: 'Go Login'
-  }
-});
+// const windows = WindowStore()
+// size = windows.getSize()
 </script>
 
 <template>
   <div class="backdrop">
-    <h1 style="color: aliceblue;">Hello World</h1>
-    <el-button :type="type"><router-link to="/auth/login">{{ text }}</router-link></el-button>
+    <h1 style="color: aliceblue; font-size: 2vw;">Hello World</h1>
+    <el-button :type="primary"><router-link to="/auth/login" style="font-size: 1vw;">Go Login</router-link></el-button>
     
   </div>
 </template>
 <style>
 
 .backdrop {
-  position: relative;	
-  margin: 0;
-  padding: 0;
-  /* width:100%;			 */
-  height:100%;		
-  top: 200px;
+  display:Flexbox;   /* 设置布局 */
+  position: absolute;	
+  height:20%;
+  width: 20%;		
+  top: 35%;
+  left: 38%;
+  z-index: 1;
+}
 
-  /* background-image: url("@/assets/L1.jpg"); */
-  /* background-size: 100%;
-  background-position: 0 0;
-  background-repeat: no-repeat; */
+.backdrop::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border: 1px solid #4738b7;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: -1;
 }
 
 </style>

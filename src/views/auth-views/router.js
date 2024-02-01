@@ -15,14 +15,6 @@ const auth_routes = [
     meta: {
         title: '注册',  
     },
-  },
-  {
-    path: 'password',
-    name: 'Password',
-    component: () => import('@/views/auth-views/password.vue'),
-    meta: {
-      title: '找回密码',  
-    },
   }
 ]
 
