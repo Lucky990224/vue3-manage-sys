@@ -3,7 +3,9 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],  // 配置所需要的插件列表
+  plugins: [  // 配置所需要的插件列表
+    vue()
+  ],  
   base: './',
   resolve: {
     alias: {
