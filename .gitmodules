@@ -1,0 +1,3 @@
+[submodule "vue3-manage-sys"]
+	path = vue3-manage-sys
+	url = ../vue3-manage-sys
