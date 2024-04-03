@@ -2,6 +2,11 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Auths } from '@/store/auth';
+import { HttpClient } from "../../components/client";
+import app_settings from '../settings';
+
+alert("url = "+ app_settings.login_url);  
+const login_client = new HttpClient(app_settings.login_url);
 
 const router = useRouter();
 const auths = Auths();
@@ -9,6 +14,10 @@ auths.$reset();            // 重置所有块、按钮显示状态
 
 const isCheckbox = ref(true);
 const activeName = ref(1)  // 0：验证码登录；1：密码登录
+const act = ref('');
+const pwd = ref('');
+
+
 function handleClick1(){
   activeName.value = 0;
   isCheckbox.value = false; 
@@ -21,21 +30,37 @@ function handleClick2(){
   console.log('activeName2 = ' + activeName.value)
 }
 
-const act = ref('');
-const pwd = ref('');
-
-
 function onclick1(){
-  var para = 'hello world';
-  window.alert("这是一个弹窗提示!"+ para);  
+  let send_data = {
+    account: act,
+    password: pwd
+  }
+
+  login_client.post(send_data, {}, (data)=>{
+    console("data!" + data);
+    var para = 'hello world';
+    window.alert("这是一个弹窗提示!"+ para);  
+    // router.push('/');                   // vue3 第二种跳转方式 通过路由字段
+    // router.push({name: 'home'});            // vue3 第二种跳转方式 通过name字段
+    // router.push(`/helloworld`);                   // vue3 第二种跳转方式 通过路由字段
+    // router.push(`/helloworld?msg=${para}`);                   // vue3 第二种跳转方式 通过路由字段
+    // router.push({name: 'helloworld',params: {msg: para}});            // vue3 带参跳转 通过命令字段
+    router.push({name: 'Sign-up', query: {msg: para}});            // vue3 带参跳转 通过命令字段
+    // router.push({path: '/auth/sign-up', query: {msg: para}});            // vue3 带参跳转 通过命令字段
+    // 带查询参数，变成 /helloworld?msg=hello world
+  }, (error)=>{
+    alert("error!" + error + '\n请重新输入密码');
+  })
+  
+  // var para = 'hello world';
+  // window.alert("这是一个弹窗提示!"+ para);  
   // router.push('/');                   // vue3 第二种跳转方式 通过路由字段
   // router.push({name: 'home'});            // vue3 第二种跳转方式 通过name字段
   // router.push(`/helloworld`);                   // vue3 第二种跳转方式 通过路由字段
   // router.push(`/helloworld?msg=${para}`);                   // vue3 第二种跳转方式 通过路由字段
   // router.push({name: 'helloworld',params: {msg: para}});            // vue3 带参跳转 通过命令字段
-  router.push({name: 'Sign-up', query: {msg: para}});            // vue3 带参跳转 通过命令字段
+  // router.push({name: 'Sign-up', query: {msg: para}});            // vue3 带参跳转 通过命令字段
   // router.push({path: '/auth/sign-up', query: {msg: para}});            // vue3 带参跳转 通过命令字段
-  // 带查询参数，变成 /helloworld?msg=hello world
 }
 
 function onclick2(){
