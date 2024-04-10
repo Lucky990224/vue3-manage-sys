@@ -32,5 +32,7 @@ export const Auths = defineStore('auths', {
   },
 
   // 开启持久化, 意义是刷新页面后数据不会丢失[需要安装持久化插件]
-  persist: true,
+  persist: {
+    enabled: true
+  }
 })
