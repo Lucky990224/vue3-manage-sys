@@ -29,3 +29,10 @@ electron 模块： 将vue打包成exe【两种使用方式：安装到vue项目�
 
 # demo1.0，初步了解vue3 创建流程、路、UI组件库、状态管理【pinia，store】、vite-config配置
 
+
+# 有时清除 npm 缓存并重新安装依赖可以解决一些奇怪的问题:
+```
+    npm cache clean --force
+    rm -rf node_modules
+    npm install
+```

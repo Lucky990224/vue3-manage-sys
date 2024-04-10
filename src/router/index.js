@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home.vue'
 import auth_routes from '@/views/auth-views/router'
+import { Auths } from '@/store/auth';
 
 // 定义一个路由数组，统一管理路由
 const routes = [
@@ -40,10 +41,33 @@ function getTitle(route) {
   return title;
 }
 
-router.beforeEach((to, from, next) => {// 在路由跳转前执行的逻辑
+// -前置守卫路由:登录校验
+router.beforeEach((to, from, next)=>{
+  console.log('11111111111111111111111111111111111111' );
   document.title = getTitle(to);; // 设置浏览器标题
-  next();
+  const store = Auths()
+  //-：获取是否登录的状态
+  let isLogin = store.isLogin
+  let userphone = store.userInfo.userPhone
+  console.log('isLogin = ' + isLogin);
+  console.log('to.name  = ' + to.name );
+  console.log('phone = ' + userphone);
+  //-:访问的请求不是 login，不是reg 也没有登录
+  if(to.name !== 'Login' && !isLogin){
+    console.log('22222222222222' );
+    next({name: 'Login'})
+  }else if(to.name == 'login' && isLogin){//-:已经登录了，还在访问登录请求
+      next({name: ''})
+  }
+  next()
 })
+
+// router.beforeEach((to, from, next)=>{
+//   document.title = getTitle(to);; // 设置浏览器标题
+//   next()
+// })
+
+
   
 router.afterEach((to, from) => {
   // 在路由跳转后执行的逻辑

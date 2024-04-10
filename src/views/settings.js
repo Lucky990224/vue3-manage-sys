@@ -1,4 +1,4 @@
-const base_url = "";
+const base_url = "/api";
 
 class AppSettings {
     constructor() {

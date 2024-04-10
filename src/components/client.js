@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const SUCCESS = 2000;
+const SUCCESS = 200;
 const code_map = {
     400: "请求错误",
     401: "未授权，请登录",
@@ -16,13 +16,18 @@ const code_map = {
     505: "通讯版本不受支持",
 }
 
+const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer <your_token>'
+};
+
 export class HttpClient {
 
     constructor(url, token = '', timeout = 15000) {      // 构造函数：new HttpClient对象时，初始化调用
         this.handler = axios.create({
-            baseURL: 'http://localhost:9999',
             timeout: timeout,
         });
+
         this.url = url;
         this.timeout = timeout;
         if(token !== ''){
@@ -33,10 +38,12 @@ export class HttpClient {
                 Promise.reject(error)
             });
         }
+        // Promise 表示请求是否通过。还表示一个异步操作的结果
         this.handler.interceptors.response.use(response => {
             // 拦截响应数据
+            // return response.data;
             if (response.data.code === SUCCESS) {
-                return Promise.resolve(response.data);
+                return Promise.resolve(response.data);          
             } else {
                 if (typeof response.data.message === "object") {
                     response.data.message = JSON.stringify(response.data.message);
@@ -49,6 +56,7 @@ export class HttpClient {
                 message: "通讯错误",
                 result: {}
             }
+            console.log("444444444444444444444   " + response.data.code);
             if (error && error.response) {
                 res.code = error.response.status;
                 res.message = code_map[error.response.status];
@@ -64,6 +72,18 @@ export class HttpClient {
         }, error => {
             Promise.reject(error)
         });
+    }
+
+    // 使用 Axios 拦截器为 Axios 请求设置授权头
+    set_headers(key, value) {
+        this.handler.interceptors.request.use(
+            config => {
+                config.headers[key] = value;
+                return config
+            }, error => {
+                Promise.reject(error)
+            }
+        )
     }
 
     get(params, success_func, error_func, headers={}) {
@@ -120,7 +140,3 @@ export class HttpClient {
         });
     }
 }
-
-// 使用方法
-// import { HttpClient } from "../../components/client";
-//  const machine_info_client = new HttpClient(url, token);

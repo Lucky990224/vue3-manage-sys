@@ -1,9 +1,38 @@
 # Vue3与后端通信方式
-
+* 注意：代理服务器转发的请求不会显示在F12抓包的请求上
 ## Axios 【常用】
 一个流行的 Promise 驱动的 HTTP 库，用于发送和接收 HTTP 请求。
 提供了一个简洁且可扩展的 API，用于处理各种 HTTP 操作。
-### Axios使用方法
+
+### Axios请求、响应、错误处理
+
+#### 请求结构/API
+* 请求类型：method【get、post、update、put等】
+* 请求路径：url
+* 请求体数据：data【】
+* 请求的查询参数： params【放在url后面的以key：value形式】
+* 请求头：headers
+
+#### Axios响应对象  .then(reponse)
+* 响应头： headers
+* 响应数据： response.data
+* 状态码： response。status
+* 状态文本： statusText
+* 响应设置： config
+
+
+#### Axios错误处理  .catch(error)
+* catch(error) 异常中的字段:
+    * error.response
+        * 当 axios 获得的响应 status code 超出了 2xx 的范围时, axios 将会抛出异常.
+        * 实际获取到的响应数据会被赋值给 异常对象的 response 字段
+    * error.request
+        * 当 axios 请求得不到响应的时候, 异常中会有 request 字段
+* 通过在 .catch(error) 的回调中对 error.response 和 error.request 进行条件判断, 就可以区分以下两种请求异常:
+    * 1. 请求所得到的响应的状态码超出了 2xx
+    * 2. 请求完全得不到响应.
+
+### Axios使用实例
 * 安装 Axios    
 ` npm install axios `
 
@@ -69,6 +98,10 @@
         };
 
     ```
+
+
+
+
 
 
 

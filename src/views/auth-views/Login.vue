@@ -4,13 +4,13 @@ import { useRouter } from 'vue-router';
 import { Auths } from '@/store/auth';
 import { HttpClient } from "../../components/client";
 import app_settings from '../settings';
+import axios from 'axios';
 
 alert("url = "+ app_settings.login_url);  
 const login_client = new HttpClient(app_settings.login_url);
 
 const router = useRouter();
 const auths = Auths();
-auths.$reset();            // 重置所有块、按钮显示状态
 
 const isCheckbox = ref(true);
 const activeName = ref(1)  // 0：验证码登录；1：密码登录
@@ -30,28 +30,30 @@ function handleClick2(){
   console.log('activeName2 = ' + activeName.value)
 }
 
-function onclick1(){
+function onLoginClick(){
   let send_data = {
-    account: act,
-    password: pwd
+    username: act.value,
+    password: pwd.value
   }
 
   login_client.post(send_data, {}, (data)=>{
-    console("data!" + data);
     var para = 'hello world';
-    window.alert("这是一个弹窗提示!"+ para);  
-    // router.push('/');                   // vue3 第二种跳转方式 通过路由字段
-    // router.push({name: 'home'});            // vue3 第二种跳转方式 通过name字段
-    // router.push(`/helloworld`);                   // vue3 第二种跳转方式 通过路由字段
-    // router.push(`/helloworld?msg=${para}`);                   // vue3 第二种跳转方式 通过路由字段
-    // router.push({name: 'helloworld',params: {msg: para}});            // vue3 带参跳转 通过命令字段
+    console.log("data.code = " + data.code);
+    console.log('msg = ' + data.msg);
+    console.log('phone = ' + data.result.userphone);
+    if(send_data.username === data.result.username){
+      auths.setLogInState(data.result);
+      console.log('is = ' + auths.isLogin);
+    }
     router.push({name: 'Sign-up', query: {msg: para}});            // vue3 带参跳转 通过命令字段
-    // router.push({path: '/auth/sign-up', query: {msg: para}});            // vue3 带参跳转 通过命令字段
-    // 带查询参数，变成 /helloworld?msg=hello world
   }, (error)=>{
-    alert("error!" + error + '\n请重新输入密码');
-  })
-  
+    console.log('error');
+    console.log(error.status);
+    console.log(error.msg);
+    alert("error!" + error.msg + 'code' +  error.code + 'error' + error.status  + '\n请重新输入密码');
+  }, {"Content-Type": "application/json; charset=UTF-8"})
+
+  //******************************************************************************************************************
   // var para = 'hello world';
   // window.alert("这是一个弹窗提示!"+ para);  
   // router.push('/');                   // vue3 第二种跳转方式 通过路由字段
@@ -64,10 +66,10 @@ function onclick1(){
 }
 
 function onclick2(){
-  auths.isShow.div1 = false;
+  console.log('记住账号');
 }
 function onclick3(){
-  auths.isShow.div1 = true;
+  console.log('记住账号');
 }
 
 function checkedIds(){
@@ -96,7 +98,7 @@ function checkedIds(){
         <label style="position: relative;height: 32px;top: 4px; left: 30px;" v-show=isCheckbox><input type="checkbox"  v-model='checkedIds'>记住账号</label>
         <router-link style="position: relative;top: 4px; left: 200px;" to="/">注册账号</router-link> 
       </div>
-      <div style="text-align: center; height: 70px;"><button id="login-button" @click="onclick1">登 录</button></div>
+      <div style="text-align: center; height: 70px;"><button id="login-button" @click="onLoginClick">登 录</button></div>
       <div style="height: 80px;">
         <router-link style="position: relative; left: 30px;" to="/">跳转首页</router-link> 
         <!-- <router-link style="position: relative;top: 4px; left: 200px;" to="/">注册账号</router-link>  -->
