@@ -6,8 +6,6 @@ import router from './router';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import piniaPersist from 'pinia-plugin-persist'
-// import { piniaPluginPersistedstate } from 'pinia-plugin-persistedstate'
-
 
 const pinia = createPinia()
 pinia.use(piniaPersist)      // 持久化插件

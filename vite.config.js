@@ -3,6 +3,12 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  build: {    // 项目构建到 dist 目录并使用 Vue 插件
+    outDir: 'dist',
+    rollupOptions: {
+      input: './src/main.js'
+    }
+  },
   plugins: [  // 配置所需要的插件列表
     vue()
   ],  
@@ -17,7 +23,6 @@ export default defineConfig({
     port: 8888,
     open: true,  // 自动打开默认浏览器
     https: false,
-    // proxy: {}    // 代理服务器
     proxy: {    // 代理服务器
       '/api': {
         target: 'http://localhost:9999', // Tornado 应用程序的地址和端口
