@@ -235,4 +235,27 @@ export default auth_routes
 * 访问嵌套路由Login时，会先显示 Auth 的组件，然后Auth组件上显示嵌套路由Login组件
 
 
+## 路由渲染
+* 两种方式
+  * 第一种  
+
+    ```<RouterView></RouterView>``` 
+
+    基本的用法，它没有任何额外的属性和插槽。<RouterView>会根据当前路由直接渲染对应的组件，没有添加任何额外的逻辑或样式
+
+  * 第二种  
+    ```
+      <RouterView class="app-router-view" v-slot="{ Component }" v-if="is_router_flash && is_machine_active">
+        <Transition>    
+          <component :is="Component" />    
+        </Transition>    
+      </RouterView>  
+    ```
+    1、插槽：v-slot="{ Component }" 使用了<RouterView>的插槽功能，允许你自定义如何渲染路由对应的组件。在这个例子中，它接收了路由组件作为Component变量。
+
+    2、条件渲染：v-if="is_router_flash && is_machine_active" 使用了Vue的条件渲染指令，只有当is_router_flash和is_machine_active两个变量都为true时，<RouterView>才会渲染。这可以用来控制何时显示路由内容，例如只在某些特定条件下才显示。
+
+    3、过渡动画：<Transition>是Vue提供的用于在元素或组件的插入、更新和移除时应用过渡效果的组件。在这个例子中，它包裹了<component :is="Component" />，意味着当路由组件发生变化时，会应用一个过渡效果。
+
+    4、动态组件：<component :is="Component" /> 是一个动态组件，它的类型（即要渲染哪个组件）由:is属性绑定到Component变量上，这个变量是由<RouterView>插槽提供的
 

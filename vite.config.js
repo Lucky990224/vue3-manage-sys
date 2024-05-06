@@ -7,7 +7,8 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       input: './src/main.js'
-    }
+    },
+    sourcemap: true
   },
   plugins: [  // 配置所需要的插件列表
     vue()

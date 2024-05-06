@@ -7,24 +7,22 @@
 </script>
 
 <template>
-  <div class="backdrop">
+  <div class="topwindow">
     <h1 style="color: aliceblue; font-size: 2vw;">Hello World</h1>
     <el-button :type="primary"><router-link to="/auth/login" style="font-size: 1vw;">Go Login</router-link></el-button>
   </div>
 </template>
 <style>
 
-.backdrop {
+.topwindow {
   display:Flexbox;   /* 设置布局 */
   position: absolute;	
-  height:20%;
-  width: 20%;		
-  top: 35%;
-  left: 38%;
+  height:100%;
+  width: 100%;		
   z-index: 1;
 }
 
-.backdrop::before {
+.topwindow::before {
   content: "";
   position: absolute;
   top: -10px;

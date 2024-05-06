@@ -36,3 +36,6 @@ electron 模块： 将vue打包成exe【两种使用方式：安装到vue项目�
     rm -rf node_modules
     npm install
 ```
+
+
+vscode 断点调试 https://blog.csdn.net/sayUonly/article/details/135288392

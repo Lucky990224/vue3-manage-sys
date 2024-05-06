@@ -6,7 +6,6 @@ auths.$reset()            // 重置所有块、按钮显示状态
 console.log('111111')
 
 
-
 </script>
 
 <template>
