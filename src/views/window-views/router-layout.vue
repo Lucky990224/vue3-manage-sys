@@ -1,22 +1,38 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted, provide } from "vue";
 import { RouterView, RouterLink, useRouter } from 'vue-router';
 
-const router = useRouter();
-console.log('111111')
+const routers = useRouter();
+const menu_router = ref([]);
+console.log('111111');
 
 const isCollapse = ref(true)
 
 
-function handleOpen(key, keyPath){
-  console.log('22222222222222')
-  console.log(key, keyPath)
+function handleSelect(key, keyPath){
+  console.log('33333333333333333');
+  console.log(key, keyPath);
 }
 
-function handleClose(key, keyPath){
-  console.log('33333333333333333')
-  console.log(key, keyPath)
-}
+
+function get_router_menu(){
+  let name = 'Window'
+  let route_list = routers.options.routes;
+  for (var index = 0; index < route_list.length; index++){
+    if (name === route_list[index].name){
+      menu_router.value = route_list[index].children;
+    }
+  };
+};
+
+
+onMounted(() => {  // 在组件的挂载（mount）阶段完成后触发，通俗来说页面第一次加载时触发
+  get_router_menu()
+});  
+
+onUnmounted(() => {  //  通常在页面切换（即路由切换）时触发，但这取决于组件是否因为路由切换而被卸载
+
+});  
 
 </script>
 
@@ -27,30 +43,35 @@ function handleClose(key, keyPath){
   </div>
 
   <div class="left">
-    <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
-      <el-radio-button :value="false">expand</el-radio-button>
-      <el-radio-button :value="true">collapse</el-radio-button>
-    </el-radio-group>
-    <el-menu
-      class="nav-menu" 
-      mode="vertical" 
-      default-active="1"
-      :collapse="isCollapse"
-      @open="handleOpen"
-      @close="handleClose"
-      :show-timeout="200" 
-      background-color="#e2efFF" 
-      text-color="black"
-    >
-      <router-link class="router-link" :to="{path: router.path, query: {is_click: true}}" v-for="router in menu_router" :key="router.key">
-        <el-menu-item :index="router.key">
-            <SvgIcon :icon="router.icon" style="width: 20px;height: 72px;"></SvgIcon>
-            <span>{{ router.label }}</span>
-        </el-menu-item>
-     </router-link>
-    </el-menu>
-  </div>
+    <h5 class="left-h5"> 个人菜单 </h5>
 
+    <el-menu  
+      :default-active="`/window/home`" 
+      class="custom-menu"  
+      mode="vertical"  
+      :router="true"
+      @select="handleSelect"  
+    >  
+      <template v-for="route in menu_router" :key="route.path">  
+        <el-sub-menu v-if="route.children && route.children.length > 0" :index="route.path">  
+          <template #title>
+            <!-- <el-icon><location /></el-icon> -->
+            <span style="font-size: 18px;">{{ route.meta.title }}</span>
+          </template>
+          <el-menu-item 
+            v-for="childRoute in route.children"  
+            :key="childRoute.path"  
+            :index="childRoute.path"  
+          >  
+            {{ childRoute.meta.title }}  
+          </el-menu-item>  
+        </el-sub-menu>  
+        <el-menu-item v-else :index="route.path">  
+          {{ route.meta.title }}  
+        </el-menu-item>  
+      </template>  
+    </el-menu> 
+  </div>
 
   <div class="right">
     <div class="windows">
@@ -58,10 +79,11 @@ function handleClose(key, keyPath){
     </div>
   </div>
 </template>
+
 <style scoped>
 * {
     box-sizing: border-box; /* 元素的盒模型的计算方式 */
-    position: absolute;     /* 设置了元素的定位方式 */
+    /* position: absolute;     设置了元素的定位方式  这里回影响菜单栏的显示*/
 }
 
 .auth-main-area {
@@ -71,6 +93,7 @@ function handleClose(key, keyPath){
     /* max-width: 100%;	 */
 }
 
+/* *******************************************顶部菜单******************************************** */
 
 .top {
   height: 50px;
@@ -78,7 +101,7 @@ function handleClose(key, keyPath){
   top: 0;  
   left: 0;
   position: fixed;  
-  background-color: rgb(201, 227, 233);
+  background-color: rgb(236, 243, 245);
 }
 
 
@@ -86,55 +109,83 @@ function handleClose(key, keyPath){
 
 .left {
   width: 220px;
-  height: 100%;
+  height: calc(100% - 50px);
   position: fixed;  
-  top: 80px;  
+  top: 50px;  
   left: 0;
   background-color: rgb(201, 227, 233);
 }
 
-
-.nav-menu {
-    height: calc(100% - 50px);
-    text-align: left;
-    padding-top: 15px;
-    overflow: auto;
+.left-h5 {
+  height: 50px;
+  width: 100%;
+  margin: auto;
+  font-size: 24px;
+  text-align: center;
+  line-height: 50px; /* 行高与高度相同，实现垂直居中 */  
+  text-shadow: 5px 5px 5px #a488e1;
 }
 
-.router-link {
-    margin-left: 5%;
-    width: 90%;
-    height: 72px;
-    display: block;
-    text-decoration: none;
-    text-align: left;
-}
-.router-link .is-active {
-    background-color: #2557ba;
-    color: white;
-    transition: all 3s ease;
-}
-.router-link .el-menu-item {
-    border-radius: 5px;
-    height: 90%;
-}
-.router-link .el-menu-item:hover {
-    background-color: #668cff;
-    transition: all 0.5s ease;
+.custom-menu {
+  width: 200px;
+  height: calc(100% - 90px);
+  top: 10px;
+  left: 10px;
+  
+  background-color: #f5f7fa; /* 背景色 */  
+  padding: 0 10px; /* 垂直内边距为0，水平内边距为10px */  
+  margin-bottom: 10px; /* 垂直间隔 */ 
+
+  display: block;
+  border: 1px solid #0a0715; /* 可选，为了更清楚地看到菜单边界 */ 
+  /* overflow-y: auto; // 当内容超出容器高度时显示垂直滚动条   */
 }
 
-.router-link span {
-    font-size: 18px;
-    word-spacing: 2px;
-    padding-left: 15%;
+/* 自定义菜单项样式 */  
+.el-menu-item {  
+  /* 你可以添加任何你想要的样式 */  
+  /* 假设菜单是垂直的或你有足够的空间来设置宽度 */  
+  width: 180px;
+  height: 60px; 
+  text-align: center;
+  /* line-height: 60px; 行高与高度相同，实现垂直居中   */
+  color: #313033; /* 文本颜色 */  
+  font-size: 18px; /* 字体大小 */ 
+  margin-bottom: 10px; /* 垂直间隔 */  
+  border-radius: 4px; /* 边框圆角 */  
+  
+  /* 更多样式... */  
+}  
+
+.el-menu-item.is-active {  
+  color: #409EFF; /* 选中时文本颜色 */  
+  background-color: #082b5f; /* 选中时背景颜色 */  
+  /* 其他样式... */  
 }
 
-/* ******************************************************************************************* */
+/* 鼠标悬停时的样式 */  
+.el-menu-item:hover {  
+  color: #fcfdfe; /* 悬停时文本颜色 */  
+  background-color: #9da1a7; /* 悬停时背景颜色 */  
+  /* 其他样式，如阴影等... */  
+}
+
+
+  
+/* 自定义子菜单标题样式 */  
+.el-submenu__title {  
+  /* 你可以添加任何你想要的样式 */  
+  font-weight: bold; /* 标题加粗 */  
+  /* 更多样式... */  
+}  
+  
+
+/* *******************************************右侧窗口************************************************ */
 
 
 .right {
-  height: 100%;
-  width: 100%;
+  height: calc(100% - 50px);
+  width: calc(100% - 220px);
   position: fixed;  
   top: 50px;  
   left: 220px;
@@ -147,6 +198,8 @@ function handleClose(key, keyPath){
   position: fixed;  
   top: 50px;  
   left: 220px;
+  overflow-y: auto; /* 当内容超出容器高度时显示垂直滚动条 */  
+  border: 1px solid #ccc; /* 可选，为了更清楚地看到菜单边界 */ 
 }
 
 

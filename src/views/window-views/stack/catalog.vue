@@ -22,7 +22,7 @@ const pwd = ref('');
 
 <template>
   <div id="auth-box">
-    <h1> 66666 </h1>
+    <h1> calalog </h1>
   </div>
 </template>
 
