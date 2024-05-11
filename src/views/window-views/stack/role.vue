@@ -2,12 +2,9 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Auths } from '@/store/auth';
-import { HttpClient } from "../../components/client";
-import app_settings from '../settings';
 import axios from 'axios';
 
-alert("url = "+ app_settings.login_url);  
-const login_client = new HttpClient(app_settings.login_url);
+alert("url = ");  
 
 const router = useRouter();
 const auths = Auths();

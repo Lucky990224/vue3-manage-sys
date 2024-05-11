@@ -10,8 +10,12 @@ const isCollapse = ref(true)
 
 
 function handleSelect(key, keyPath){
-  console.log('33333333333333333');
-  console.log(key, keyPath);
+  let path = '/window'
+  for (var i=0; i<keyPath.length;i++){
+    path = path + '/' + keyPath[i];
+  }
+  console.log('key = ',key,'keypath = ', keyPath, 'path = ', path);
+  routers.push(path);
 }
 
 
@@ -27,6 +31,7 @@ function get_router_menu(){
 
 
 onMounted(() => {  // 在组件的挂载（mount）阶段完成后触发，通俗来说页面第一次加载时触发
+  console.log('333333333333333333');
   get_router_menu()
 });  
 
@@ -49,7 +54,7 @@ onUnmounted(() => {  //  通常在页面切换（即路由切换）时触发，�
       :default-active="`/window/home`" 
       class="custom-menu"  
       mode="vertical"  
-      :router="true"
+      :router="false"
       @select="handleSelect"  
     >  
       <template v-for="route in menu_router" :key="route.path">  

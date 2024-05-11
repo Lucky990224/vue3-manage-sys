@@ -33,8 +33,8 @@ const window_router = [
     meta: {
         title: '书库',  
     },
-    redirect: "/window/stack/catalog",
-    children: catalog_router
+    redirect: "/stack/catalog",
+    children: catalog_router,
   }
 ]
 
